@@ -13,6 +13,5 @@ module.exports = {
   requirePragma: false,
   trailingComma: 'none',
   useTabs: false,
-  plugins: [require.resolve('prettier-plugin-tailwindcss')],
   tailwindAttributes: ['className']
 }
