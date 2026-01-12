@@ -1,10 +1,10 @@
 import { BalanceSummary } from '@/components/balance-summary'
-import { View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const HomeScreen = () => {
   return (
-    <View>
+    <SafeAreaView style={{ padding: 16 }}>
       <BalanceSummary />
-    </View>
+    </SafeAreaView>
   )
 }

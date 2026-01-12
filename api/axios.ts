@@ -2,10 +2,11 @@ import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axio
 import axios, { isAxiosError } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import Toast from 'react-native-toast-message'
+import { investmentOpportunities } from './data/investment'
+import { balances, transactions } from './data/wallet'
+import { END_POINTS } from './endpoints'
 
-const api = axios.create({
-  baseURL: 'https://api.example.com'
-})
+axios.defaults.baseURL = 'http://localhost:3000'
 
 const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
   if (!config.headers) {
@@ -50,9 +51,24 @@ const onResponseError = (error: AxiosError | any): Promise<AxiosError> => {
   return Promise.reject(error)
 }
 
-api.interceptors.request.use(onRequest)
-api.interceptors.response.use(onResponse, onResponseError)
+axios.interceptors.request.use(onRequest)
+axios.interceptors.response.use(onResponse, onResponseError)
 
-const mock = new MockAdapter(api, { delayResponse: 500 })
+// Mock API
+const mock = new MockAdapter(axios, { delayResponse: 500 })
 
-export { api, mock }
+mock.onGet(END_POINTS.balances).reply(200, {
+  data: balances
+})
+
+mock.onGet(END_POINTS.transactions).reply(200, {
+  data: transactions
+})
+
+mock.onGet(END_POINTS.investmentOpportunities).reply(200, {
+  data: {
+    opportunities: investmentOpportunities
+  }
+})
+
+export { axios as ConfiguredAxios, mock }
