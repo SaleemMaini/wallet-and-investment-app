@@ -1,5 +1,5 @@
 export type InvestmentOpportunity = {
-  id: number
+  id: string
   name: string
   minimumAmount: number
   expectedAnnualReturn: number

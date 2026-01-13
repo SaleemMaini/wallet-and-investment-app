@@ -16,11 +16,11 @@ export const TransactionsList = () => {
         data={transactions}
         renderItem={({ item }) => <TransactionItem transaction={item} />}
         keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListEmptyComponent={
           isLoading ? <ActivityIndicator size='large' color='#000000' /> : <Text>No transactions found</Text>
         }
-        style={{ height: 200 }}
       />
     </View>
   )

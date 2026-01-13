@@ -16,18 +16,20 @@ export const InvestmentOpportunitiesList = () => {
       <FlashList
         data={investmentOpportunities}
         renderItem={({ item }) => <InvestmentOpportunityCard opportunity={item} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListEmptyComponent={
           isLoading ? (
-            <ActivityIndicator size='large' color='#000000' />
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size='large' color='#000000' />
+            </View>
           ) : (
             <Text>No investment opportunities found</Text>
           )
         }
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ height: 200 }}
+        style={{ flex: 1 }}
       />
     </View>
   )
