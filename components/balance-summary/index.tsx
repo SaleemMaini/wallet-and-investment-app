@@ -3,6 +3,7 @@ import { CURRENCY } from '@/constants/currency'
 import { formatNumber } from '@/utils/format-number'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { Card } from '../ui/card'
 import { calcTotalBalance } from './utils'
 
 export const BalanceSummary = () => {
@@ -43,22 +44,25 @@ export const BalanceSummary = () => {
       {/* Title */}
       <Text style={styles.title}>Balance Summary</Text>
 
-      <View style={styles.card}>
+      <Card>
         {/* Available Balance */}
-        <Text>
-          Available: {formatNumber(available)} {CURRENCY}
-        </Text>
+        <Row label='Available:' value={`${formatNumber(available)} ${CURRENCY}`} />
 
         {/* Invested Balance */}
-        <Text>
-          Invested: {formatNumber(invested)} {CURRENCY}
-        </Text>
+        <Row label='Invested:' value={`${formatNumber(invested)} ${CURRENCY}`} />
 
         {/* Total Balance */}
-        <Text style={styles.totalBalance}>
-          Total: {formatNumber(totalBalance)} {CURRENCY}
-        </Text>
-      </View>
+        <Row label='Total:' value={`${formatNumber(totalBalance)} ${CURRENCY}`} />
+      </Card>
+    </View>
+  )
+}
+
+const Row = ({ label, value }: { label: string; value: string }) => {
+  return (
+    <View style={styles.row}>
+      <Text>{label}</Text>
+      <Text style={styles.value}>{value}</Text>
     </View>
   )
 }
@@ -72,13 +76,16 @@ const styles = StyleSheet.create({
   container: {
     gap: 10
   },
-  card: {
-    padding: 16,
-    backgroundColor: '#e0dfdf',
-    borderRadius: 16,
-    gap: 10
-  },
   totalBalance: {
+    fontWeight: 'bold',
+    color: '#000000'
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  value: {
     fontWeight: 'bold',
     color: '#000000'
   }

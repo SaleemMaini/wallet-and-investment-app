@@ -66,9 +66,7 @@ mock.onGet(END_POINTS.transactions).reply(200, {
 })
 
 mock.onGet(END_POINTS.investmentOpportunities).reply(200, {
-  data: {
-    opportunities: investmentOpportunities
-  }
+  data: investmentOpportunities
 })
 
 export { axios as ConfiguredAxios, mock }
