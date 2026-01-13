@@ -1,6 +1,6 @@
 import { BalanceSummary } from '@/components/balance-summary'
 import { View } from 'react-native'
-import { InvestmentOpportunitiesList } from './investment-opportunities'
+import { InvestmentOpportunitiesList } from './components/investment-opportunities'
 
 export const HomeScreen = () => {
   return (
