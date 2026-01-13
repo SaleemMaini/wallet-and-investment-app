@@ -4,4 +4,5 @@ export type InvestmentOpportunity = {
   minimumAmount: number
   expectedAnnualReturn: number
   duration: number
+  description: string
 }

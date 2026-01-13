@@ -12,3 +12,12 @@ export const useInvestmentOpportunitiesQuery = () => {
 
   return query
 }
+
+export const useInvestmentOpportunityQuery = (id: string) => {
+  const query = useQuery({
+    queryKey: ['investment-opportunity', id],
+    queryFn: () => ConfiguredAxios.get<AxiosResponse<InvestmentOpportunity>>(END_POINTS.investmentOpportunity(id))
+  })
+
+  return query
+}

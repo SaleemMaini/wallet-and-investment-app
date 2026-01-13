@@ -71,4 +71,13 @@ mock.onGet(END_POINTS.investmentOpportunities).reply(200, {
   data: investmentOpportunities
 })
 
+mock.onGet(/\/investment\/opportunities\/\d+/).reply(config => {
+  const id = Number(config.url?.split('/').pop())
+  const opportunity = investmentOpportunities.find(o => o.id === id)
+  if (opportunity) {
+    return [200, { data: opportunity }]
+  }
+  return [404, { message: 'Investment opportunity not found' }]
+})
+
 export { axios as ConfiguredAxios, mock }
