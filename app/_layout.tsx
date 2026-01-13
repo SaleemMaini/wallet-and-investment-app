@@ -8,7 +8,8 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider value={DefaultTheme}>
         <Stack>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+          <Stack.Screen name='(tabs)' options={{ title: 'Home' }} />
+          <Stack.Screen name='investment-opportunity/[id]' options={{ title: 'Investment Opportunity' }} />
         </Stack>
       </ThemeProvider>
     </QueryClientProvider>
