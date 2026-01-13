@@ -62,7 +62,9 @@ mock.onGet(END_POINTS.balances).reply(200, {
 })
 
 mock.onGet(END_POINTS.transactions).reply(200, {
-  data: transactions
+  data: {
+    transactions
+  }
 })
 
 mock.onGet(END_POINTS.investmentOpportunities).reply(200, {

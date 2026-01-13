@@ -3,9 +3,15 @@ export type WalletBalancesResponse = {
   invested: number
 }
 
+export enum TransactionType {
+  DEPOSIT = 'deposit',
+  INVEST = 'invest'
+}
+
 export type Transaction = {
-  id: number
-  name: string
+  id: string
+  type: TransactionType
+  date: string
   amount: number
 }
 
