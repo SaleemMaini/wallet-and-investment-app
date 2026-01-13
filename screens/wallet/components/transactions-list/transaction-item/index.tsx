@@ -1,5 +1,5 @@
 import { CURRENCY } from '@/constants/currency'
-import { formatDateToShortString } from '@/lib/date-fns'
+import { dateTimeFormat } from '@/lib/date-fns'
 import { Transaction, TransactionType } from '@/types/wallet'
 import { formatNumber } from '@/utils/format-number'
 import { Ionicons } from '@expo/vector-icons'
@@ -15,15 +15,15 @@ const TRANSACTION_CONFIG = {
     label: 'Deposit',
     color: '#10B981',
     backgroundColor: 'rgba(16, 185, 129, 0.12)',
-    prefix: '+',
+    prefix: '+'
   },
   [TransactionType.INVEST]: {
     icon: 'trending-up' as const,
     label: 'Investment',
     color: '#6366F1',
     backgroundColor: 'rgba(99, 102, 241, 0.12)',
-    prefix: '-',
-  },
+    prefix: '-'
+  }
 }
 
 export const TransactionItem = (props: Props) => {
@@ -44,7 +44,7 @@ export const TransactionItem = (props: Props) => {
       {/* Details */}
       <View style={styles.details}>
         <Text style={styles.typeLabel}>{config.label}</Text>
-        <Text style={styles.date}>{formatDateToShortString(date)}</Text>
+        <Text style={styles.date}>{dateTimeFormat(date)}</Text>
       </View>
 
       {/* Amount */}
@@ -72,36 +72,36 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 6,
-    elevation: 1,
+    elevation: 1
   },
   iconContainer: {
     width: 46,
     height: 46,
     borderRadius: 13,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   details: {
     flex: 1,
-    gap: 3,
+    gap: 3
   },
   typeLabel: {
     fontSize: 15,
     fontWeight: '600',
     color: '#1F2937',
-    letterSpacing: -0.2,
+    letterSpacing: -0.2
   },
   date: {
     fontSize: 13,
     color: '#9CA3AF',
-    fontWeight: '400',
+    fontWeight: '400'
   },
   amountContainer: {
-    alignItems: 'flex-end',
+    alignItems: 'flex-end'
   },
   amount: {
     fontSize: 15,
     fontWeight: '700',
-    letterSpacing: -0.3,
-  },
+    letterSpacing: -0.3
+  }
 })

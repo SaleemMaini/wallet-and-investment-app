@@ -1,5 +1,3 @@
-import { I18nManager } from 'react-native'
-
 import dayjs from 'dayjs'
 
 import 'dayjs/locale/ar'
@@ -9,7 +7,7 @@ export function formatDateToShortString(date: Date | string) {
 }
 
 export const dateTimeFormat = (date: Date | string): string => {
-  return dayjs(date).format(I18nManager.isRTL ? 'D MMMM YYYY، hh:mm a' : 'YYYY MMM D, hh:mm a')
+  return dayjs(date).format('D MMM YYYY hh:mm A')
 }
 
 export const dateYMDFormatWithTime = (date: Date | string): string => {
