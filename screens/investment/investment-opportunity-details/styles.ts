@@ -195,6 +195,29 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  ctaButtonDisabled: {
+    backgroundColor: '#9CA3AF',
+    shadowOpacity: 0.1
+  },
+  ctaIconContainerDisabled: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)'
+  },
+  insufficientBalanceWarning: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    marginBottom: 12
+  },
+  insufficientBalanceText: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#B45309'
+  },
   // States
   stateContainer: {
     flex: 1,

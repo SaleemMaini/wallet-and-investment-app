@@ -1,4 +1,5 @@
 import { useInvestmentOpportunityQuery } from '@/api/hooks/investment'
+import { useWalletBalancesQuery } from '@/api/hooks/wallet'
 import { CURRENCY } from '@/constants/currency'
 import { formatNumber } from '@/utils/format-number'
 import { Ionicons } from '@expo/vector-icons'
@@ -14,7 +15,10 @@ export const InvestmentOpportunityDetailsScreen = () => {
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const { data, isLoading, error } = useInvestmentOpportunityQuery(id)
+  const { data: balancesData } = useWalletBalancesQuery()
   const opportunity = data?.data.data
+  const availableBalance = balancesData?.data.data.available ?? 0
+  const hasInsufficientBalance = opportunity ? availableBalance < opportunity.minimumAmount : false
 
   // Loading state
   if (isLoading) {
@@ -61,7 +65,10 @@ export const InvestmentOpportunityDetailsScreen = () => {
     <View style={styles.container}>
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 120 }]}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingBottom: insets.bottom + (hasInsufficientBalance ? 180 : 120) }
+        ]}
         showsVerticalScrollIndicator={false}
       >
         {/* Header */}
@@ -115,14 +122,26 @@ export const InvestmentOpportunityDetailsScreen = () => {
 
       {/* Fixed Bottom CTA */}
       <View style={[styles.ctaContainer, { paddingBottom: insets.bottom + 16 }]}>
-        <TouchableOpacity style={styles.ctaButton} activeOpacity={0.85}>
+        {hasInsufficientBalance && (
+          <View style={styles.insufficientBalanceWarning}>
+            <Ionicons name='alert-circle' size={16} color='#F59E0B' />
+            <Text style={styles.insufficientBalanceText}>
+              Insufficient balance. You need {formatNumber(minimumAmount - availableBalance)} {CURRENCY} more.
+            </Text>
+          </View>
+        )}
+        <TouchableOpacity
+          style={[styles.ctaButton, hasInsufficientBalance && styles.ctaButtonDisabled]}
+          activeOpacity={0.85}
+          disabled={hasInsufficientBalance}
+        >
           <View style={styles.ctaContent}>
             <Text style={styles.ctaLabel}>Invest</Text>
             <Text style={styles.ctaAmount}>
               {formatNumber(minimumAmount)} {CURRENCY}
             </Text>
           </View>
-          <View style={styles.ctaIconContainer}>
+          <View style={[styles.ctaIconContainer, hasInsufficientBalance && styles.ctaIconContainerDisabled]}>
             <Ionicons name='arrow-forward' size={20} color='#FFFFFF' />
           </View>
         </TouchableOpacity>
