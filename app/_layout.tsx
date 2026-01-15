@@ -2,6 +2,7 @@ import { queryClient } from '@/lib/react-query'
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { Stack } from 'expo-router'
+import ToastProvider from 'react-native-toast-message'
 
 export default function RootLayout() {
   return (
@@ -12,6 +13,8 @@ export default function RootLayout() {
           <Stack.Screen name='investment-opportunity/[id]' options={{ title: 'Investment Opportunity' }} />
         </Stack>
       </ThemeProvider>
+
+      <ToastProvider position='top' topOffset={80} />
     </QueryClientProvider>
   )
 }

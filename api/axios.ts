@@ -34,6 +34,11 @@ const onResponseError = (error: AxiosError | any): Promise<AxiosError> => {
 
   if (isAxiosError(error)) {
     const message = error.response.data.message
+
+    if (message) {
+      error.message = message
+    }
+
     const errorsMessages = error.response.data.errors ? Object.values(error.response.data.errors) : []
 
     Toast.hide()
@@ -83,6 +88,10 @@ mock.onGet(/\/investment\/opportunities\/\d+/).reply(config => {
 
 mock.onPost(/\/investment\/opportunities\/\d+/).reply(config => {
   const { amount } = JSON.parse(config.data || '{}')
+
+  if (amount > balances.available) {
+    return [400, { message: 'Insufficient balance' }]
+  }
 
   balances.available -= amount
   balances.invested += amount

@@ -132,9 +132,9 @@ export const InvestmentOpportunityDetailsScreen = () => {
           </View>
         )}
         <TouchableOpacity
-          style={[styles.ctaButton, (hasInsufficientBalance || isPending) && styles.ctaButtonDisabled]}
+          style={[styles.ctaButton, isPending && styles.ctaButtonDisabled]}
           activeOpacity={0.85}
-          disabled={hasInsufficientBalance || isPending}
+          disabled={isPending}
           onPress={() => investOpportunity({ id, payload: { amount: minimumAmount } })}
         >
           {isPending ? (
@@ -149,7 +149,7 @@ export const InvestmentOpportunityDetailsScreen = () => {
                   {formatNumber(minimumAmount)} {CURRENCY}
                 </Text>
               </View>
-              <View style={[styles.ctaIconContainer, hasInsufficientBalance && styles.ctaIconContainerDisabled]}>
+              <View style={[styles.ctaIconContainer]}>
                 <Ionicons name='arrow-forward' size={20} color='#FFFFFF' />
               </View>
             </>
