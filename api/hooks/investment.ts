@@ -1,5 +1,5 @@
 import { InvestmentOpportunity } from '@/types/investment'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import { ConfiguredAxios } from '../axios'
 import { END_POINTS } from '../endpoints'
@@ -20,4 +20,13 @@ export const useInvestmentOpportunityQuery = (id: string) => {
   })
 
   return query
+}
+
+export const useInvestOpportunityMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (id: string) =>
+      ConfiguredAxios.post<AxiosResponse<InvestmentOpportunity>>(END_POINTS.investmentOpportunity(id))
+  })
+
+  return mutation
 }

@@ -1,4 +1,4 @@
-import { useInvestmentOpportunityQuery } from '@/api/hooks/investment'
+import { useInvestmentOpportunityQuery, useInvestOpportunityMutation } from '@/api/hooks/investment'
 import { useWalletBalancesQuery } from '@/api/hooks/wallet'
 import { CURRENCY } from '@/constants/currency'
 import { formatNumber } from '@/utils/format-number'
@@ -19,6 +19,7 @@ export const InvestmentOpportunityDetailsScreen = () => {
   const opportunity = data?.data.data
   const availableBalance = balancesData?.data.data.available ?? 0
   const hasInsufficientBalance = opportunity ? availableBalance < opportunity.minimumAmount : false
+  const { mutate: investOpportunity, isPending } = useInvestOpportunityMutation()
 
   // Loading state
   if (isLoading) {
@@ -131,19 +132,28 @@ export const InvestmentOpportunityDetailsScreen = () => {
           </View>
         )}
         <TouchableOpacity
-          style={[styles.ctaButton, hasInsufficientBalance && styles.ctaButtonDisabled]}
+          style={[styles.ctaButton, (hasInsufficientBalance || isPending) && styles.ctaButtonDisabled]}
           activeOpacity={0.85}
-          disabled={hasInsufficientBalance}
+          disabled={hasInsufficientBalance || isPending}
+          onPress={() => investOpportunity(id)}
         >
-          <View style={styles.ctaContent}>
-            <Text style={styles.ctaLabel}>Invest</Text>
-            <Text style={styles.ctaAmount}>
-              {formatNumber(minimumAmount)} {CURRENCY}
-            </Text>
-          </View>
-          <View style={[styles.ctaIconContainer, hasInsufficientBalance && styles.ctaIconContainerDisabled]}>
-            <Ionicons name='arrow-forward' size={20} color='#FFFFFF' />
-          </View>
+          {isPending ? (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size='small' color='#FFFFFF' />
+            </View>
+          ) : (
+            <>
+              <View style={styles.ctaContent}>
+                <Text style={styles.ctaLabel}>Invest</Text>
+                <Text style={styles.ctaAmount}>
+                  {formatNumber(minimumAmount)} {CURRENCY}
+                </Text>
+              </View>
+              <View style={[styles.ctaIconContainer, hasInsufficientBalance && styles.ctaIconContainerDisabled]}>
+                <Ionicons name='arrow-forward' size={20} color='#FFFFFF' />
+              </View>
+            </>
+          )}
         </TouchableOpacity>
       </View>
     </View>

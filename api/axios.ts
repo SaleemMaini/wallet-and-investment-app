@@ -80,4 +80,10 @@ mock.onGet(/\/investment\/opportunities\/\d+/).reply(config => {
   return [404, { message: 'Investment opportunity not found' }]
 })
 
+mock.onPost(/\/investment\/opportunities\/\d+/).reply(200, {
+  data: {
+    message: 'Investment opportunity invested successfully'
+  }
+})
+
 export { axios as ConfiguredAxios, mock }
