@@ -19,10 +19,8 @@ export const InvestmentOpportunitiesList = () => {
         keyExtractor={item => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListEmptyComponent={
-          isLoading ? (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <ActivityIndicator size='large' color='#000000' />
-            </View>
+          isLoading || true ? (
+            <ActivityIndicator size='large' color='#000000' style={{ marginLeft: 150 }} />
           ) : (
             <Text>No investment opportunities found</Text>
           )
