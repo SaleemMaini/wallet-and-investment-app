@@ -1,3 +1,4 @@
+import { TransactionType } from '@/types/wallet'
 import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import axios, { isAxiosError } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -80,10 +81,26 @@ mock.onGet(/\/investment\/opportunities\/\d+/).reply(config => {
   return [404, { message: 'Investment opportunity not found' }]
 })
 
-mock.onPost(/\/investment\/opportunities\/\d+/).reply(200, {
-  data: {
-    message: 'Investment opportunity invested successfully'
-  }
+mock.onPost(/\/investment\/opportunities\/\d+/).reply(config => {
+  const { amount } = JSON.parse(config.data || '{}')
+
+  balances.available -= amount
+  balances.invested += amount
+  transactions.unshift({
+    id: String(transactions.length + 1),
+    amount,
+    date: new Date().toISOString(),
+    type: TransactionType.INVEST
+  })
+
+  return [
+    200,
+    {
+      data: {
+        message: 'Investment opportunity invested successfully'
+      }
+    }
+  ]
 })
 
 export { axios as ConfiguredAxios, mock }

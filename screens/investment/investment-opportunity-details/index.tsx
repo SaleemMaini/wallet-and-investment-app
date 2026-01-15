@@ -135,7 +135,7 @@ export const InvestmentOpportunityDetailsScreen = () => {
           style={[styles.ctaButton, (hasInsufficientBalance || isPending) && styles.ctaButtonDisabled]}
           activeOpacity={0.85}
           disabled={hasInsufficientBalance || isPending}
-          onPress={() => investOpportunity(id)}
+          onPress={() => investOpportunity({ id, payload: { amount: minimumAmount } })}
         >
           {isPending ? (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

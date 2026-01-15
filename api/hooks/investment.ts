@@ -1,3 +1,4 @@
+import { queryClient } from '@/lib/react-query'
 import { InvestmentOpportunity } from '@/types/investment'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
@@ -24,8 +25,12 @@ export const useInvestmentOpportunityQuery = (id: string) => {
 
 export const useInvestOpportunityMutation = () => {
   const mutation = useMutation({
-    mutationFn: (id: string) =>
-      ConfiguredAxios.post<AxiosResponse<InvestmentOpportunity>>(END_POINTS.investmentOpportunity(id))
+    mutationFn: ({ id, payload }: { id: string; payload: { amount: number } }) =>
+      ConfiguredAxios.post<AxiosResponse<InvestmentOpportunity>>(END_POINTS.investmentOpportunity(id), payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['wallet-balances'] })
+      queryClient.invalidateQueries({ queryKey: ['wallet-transactions'] })
+    }
   })
 
   return mutation
