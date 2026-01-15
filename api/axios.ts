@@ -72,7 +72,7 @@ mock.onGet(END_POINTS.investmentOpportunities).reply(200, {
 })
 
 mock.onGet(/\/investment\/opportunities\/\d+/).reply(config => {
-  const id = Number(config.url?.split('/').pop())
+  const id = config.url?.split('/').pop()
   const opportunity = investmentOpportunities.find(o => o.id === id)
   if (opportunity) {
     return [200, { data: opportunity }]
